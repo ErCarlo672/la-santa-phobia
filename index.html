@@ -13,12 +13,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Pirata+One&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261016c">
+<link rel="stylesheet" href="styles.css?v=20261016d">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"NailSalon","name":"La Santa Phobia","image":"assets/img/p4.webp","telephone":["+34955317512","+34640842993"],"email":"info@marinadaza.es","address":{"@type":"PostalAddress","streetAddress":"Av. San José de Calasanz, 5, local 1","postalCode":"41089","addressLocality":"Dos Hermanas","addressRegion":"Sevilla","addressCountry":"ES"},"foundingDate":"2019-11","sameAs":["https://www.instagram.com/marinadnails/","https://www.facebook.com/marinadnails/"]}
 </script>
 </head>
 <body>
+<a class="skip" href="#top">Saltar al contenido</a>
 
 <!-- Splash (CSS safety net + JS hide) -->
 <div class="splash" id="splash" aria-hidden="true">
@@ -45,7 +46,7 @@
   <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
 </header>
 
-<div class="menu" id="menu" aria-hidden="true">
+<div class="menu" id="menu" aria-hidden="true" inert>
   <nav>
     <a href="#santuario">Santuario</a>
     <a href="#servicios">Servicios</a>
@@ -57,7 +58,7 @@
   <p class="menu__foot">955 317 512 · 640 842 993</p>
 </div>
 
-<main id="top">
+<main id="top" tabindex="-1">
 
   <!-- HERO -->
   <section class="hero" id="hero">
@@ -71,9 +72,13 @@
       </h1>
       <p class="hero__sub">Nail art, tooth gems, depilación con hilo y microblading.<br><em>Aquí ocurre toda la magia.</em></p>
       <div class="hero__ctas">
-        <a class="btn btn--glow magnetic" href="https://booksy.com/es-es/4019_la-santa-phobia-marina-daza_salon-de-unas_29946_dos-hermanas" target="_blank" rel="noopener">Reservar en Booksy <i>→</i></a>
+        <a class="btn btn--glow magnetic" href="https://booksy.com/es-es/4019_la-santa-phobia-marina-daza_salon-de-unas_29946_dos-hermanas" target="_blank" rel="noopener">Reservar en Booksy <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn--ghost magnetic" href="#servicios">Ver servicios</a>
       </div>
+      <a class="hero__proof" href="#celebrities">
+        <span class="hero__avatars" aria-hidden="true"><img src="assets/img/p5.webp" alt="" width="40" height="40"><img src="assets/img/p7.webp" alt="" width="40" height="40"><img src="assets/img/p8.webp" alt="" width="40" height="40"></span>
+        <span>Con la confianza de <b>Rosalía, Becky G y Duki</b></span>
+      </a>
     </div>
     <div class="hero__badge" aria-hidden="true">
       <svg viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
@@ -102,7 +107,7 @@
         <div class="stats">
           <div class="stat reveal"><strong data-count="2019">2019</strong><span>Abrimos las puertas</span></div>
           <div class="stat reveal"><strong data-count="20" data-suffix="+">20+</strong><span>Tratamientos</span></div>
-          <div class="stat reveal"><strong>5<small>★</small></strong><span>Valoración de clientas</span></div>
+          <div class="stat reveal"><strong>24<small>h</small></strong><span>Reserva online en Booksy</span></div>
         </div>
       </div>
       <div class="about__media">
@@ -200,10 +205,12 @@
       </div>
       <div class="cf__floor" aria-hidden="true"></div>
       <div class="cf__ui">
-        <button class="cf__btn" type="button" data-dir="-1" aria-label="Foto anterior">←</button>
-        <div class="cf__dots" role="tablist" aria-label="Elegir foto"></div>
-        <button class="cf__btn" type="button" data-dir="1" aria-label="Foto siguiente">→</button>
+        <button class="cf__btn" type="button" data-dir="-1" aria-label="Foto anterior"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+        <div class="cf__dots" role="group" aria-label="Elegir foto"></div>
+        <button class="cf__btn" type="button" data-dir="1" aria-label="Foto siguiente"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="cf__btn cf__play" type="button" aria-pressed="false" aria-label="Pausar el carrusel"><svg class="ic ic--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg><svg class="ic ic--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15l12-7.5z"/></svg></button>
       </div>
+      <p class="sr-only" id="cfStatus" aria-live="polite" aria-atomic="true"></p>
     </div>
     <ul class="names">
       <li>Rosalía</li><li>Becky G</li><li>Duki</li><li>Aitor Ruibal</li><li>Borja Iglesias</li><li>Loren Morón</li>
@@ -212,7 +219,7 @@
 
   <!-- TESTIMONIOS -->
   <section class="reviews" aria-label="Opiniones">
-    <div class="reviews__row">
+    <div class="reviews__row" tabindex="0" aria-label="Opiniones de clientas (pasa el ratón o enfoca para pausar)">
       <div class="reviews__track">
         <blockquote class="review"><p>“Siempre había tenido muchos complejos con las cejas, pero hace 4 años descubrí a Marina y ahora me siento mucho más segura. Es inigualable.”</p><cite>Reyes Rodríguez</cite></blockquote>
         <blockquote class="review"><p>“Es alucinante lo bien que hace las cejas y lo rápida que es. Siempre repito y no me cansaré de recomendarla.”</p><cite>Andrea Martínez</cite></blockquote>
@@ -231,14 +238,14 @@
         <p class="eyebrow">Pedir cita</p>
         <h2 class="h2">Tu cita, <em>en cuatro toques</em>.</h2>
         <p class="lead">Reservamos a través de Booksy: eliges servicio, especialista, día y hora. Y Booksy te recuerda la cita automáticamente.</p>
-        <a class="btn btn--glow btn--lg magnetic" href="https://booksy.com/es-es/4019_la-santa-phobia-marina-daza_salon-de-unas_29946_dos-hermanas" target="_blank" rel="noopener">Reservar en Booksy <i>→</i></a>
+        <a class="btn btn--glow btn--lg magnetic" href="https://booksy.com/es-es/4019_la-santa-phobia-marina-daza_salon-de-unas_29946_dos-hermanas" target="_blank" rel="noopener">Reservar en Booksy <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <p class="muted small">¿Prefieres llamar? <a href="tel:+34955317512">955 317 512</a> · <a href="tel:+34640842993">640 842 993</a></p>
       </div>
       <ol class="steps">
-        <li class="reveal"><b>01</b><div><h4>Busca «La Santa Phobia»</h4><p>En la app o en booksy.com.</p></div></li>
-        <li class="reveal"><b>02</b><div><h4>Elige el servicio</h4><p>Puedes añadir todos los que necesites.</p></div></li>
-        <li class="reveal"><b>03</b><div><h4>Día, hora y especialista</h4><p>Escoge a quien prefieras del equipo.</p></div></li>
-        <li class="reveal"><b>04</b><div><h4>Recordatorio automático</h4><p>Booksy te avisa antes de tu cita.</p></div></li>
+        <li class="reveal"><b>01</b><div><h3>Busca «La Santa Phobia»</h3><p>En la app o en booksy.com.</p></div></li>
+        <li class="reveal"><b>02</b><div><h3>Elige el servicio</h3><p>Puedes añadir todos los que necesites.</p></div></li>
+        <li class="reveal"><b>03</b><div><h3>Día, hora y especialista</h3><p>Escoge a quien prefieras del equipo.</p></div></li>
+        <li class="reveal"><b>04</b><div><h3>Recordatorio automático</h3><p>Booksy te avisa antes de tu cita.</p></div></li>
       </ol>
     </div>
   </section>
@@ -250,7 +257,7 @@
       <p class="eyebrow reveal">Cursos</p>
       <h2 class="h1 reveal" data-split>La Santa <em>Academia</em></h2>
       <p class="lead reveal">Aprende las técnicas que nos han llevado hasta las manos de artistas internacionales. Formación online y comunidad para profesionales del nail art y la estética.</p>
-      <a class="btn btn--ghost btn--lg magnetic reveal" href="https://www.skool.com/la-santa-academia-4481/about" target="_blank" rel="noopener">Entrar a la academia <i>↗</i></a>
+      <a class="btn btn--ghost btn--lg magnetic reveal" href="https://www.skool.com/la-santa-academia-4481/about" target="_blank" rel="noopener">Entrar a la academia <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
     </div>
   </section>
 
@@ -261,10 +268,10 @@
         <p class="eyebrow reveal">Visítanos</p>
         <h2 class="h2 reveal">Av. San José de Calasanz, 5<br><em>local 1, Dos Hermanas</em></h2>
         <div class="contact__list">
-          <a href="tel:+34955317512" class="reveal"><span>Teléfono</span>955 317 512</a>
-          <a href="tel:+34640842993" class="reveal"><span>Móvil</span>640 842 993</a>
-          <a href="mailto:info@marinadaza.es" class="reveal"><span>Email</span>info@marinadaza.es</a>
-          <a href="https://www.instagram.com/marinadnails/" target="_blank" rel="noopener" class="reveal"><span>Instagram</span>@marinadnails</a>
+          <a href="tel:+34955317512" class="reveal"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Teléfono</span>955 317 512</a>
+          <a href="tel:+34640842993" class="reveal"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>Móvil</span>640 842 993</a>
+          <a href="mailto:info@marinadaza.es" class="reveal"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>Email</span>info@marinadaza.es</a>
+          <a href="https://www.instagram.com/marinadnails/" target="_blank" rel="noopener" class="reveal"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</span>@marinadnails</a>
         </div>
       </div>
       <div class="contact__map tilt reveal">
@@ -290,11 +297,11 @@
   </div>
 </footer>
 
-<a class="fab magnetic" href="https://booksy.com/es-es/4019_la-santa-phobia-marina-daza_salon-de-unas_29946_dos-hermanas" target="_blank" rel="noopener" aria-label="Reservar cita">✦ Reservar</a>
+<a class="fab magnetic" href="https://booksy.com/es-es/4019_la-santa-phobia-marina-daza_salon-de-unas_29946_dos-hermanas" target="_blank" rel="noopener" aria-label="Reservar cita en Booksy"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Reservar</span></a>
 
-<script defer src="lib/three.min.js?v=20261016c"></script>
-<script defer src="lib/gsap.min.js?v=20261016c"></script>
-<script defer src="lib/ScrollTrigger.min.js?v=20261016c"></script>
-<script defer src="main.js?v=20261016c"></script>
+<script defer src="lib/three.min.js?v=20261016d"></script>
+<script defer src="lib/gsap.min.js?v=20261016d"></script>
+<script defer src="lib/ScrollTrigger.min.js?v=20261016d"></script>
+<script defer src="main.js?v=20261016d"></script>
 </body>
 </html>

@@ -100,9 +100,15 @@
     function setMenu(open) {
       menu.classList.toggle('is-open', open);
       burger.setAttribute('aria-expanded', open);
+      burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
       menu.setAttribute('aria-hidden', !open);
+      if (open) menu.removeAttribute('inert'); else menu.setAttribute('inert', '');
       document.body.style.overflow = open ? 'hidden' : '';
+      if (open) { var f = menu.querySelector('a'); if (f) setTimeout(function () { f.focus(); }, 300); }
     }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('is-open')) { setMenu(false); burger.focus(); }
+    });
     burger.addEventListener('click', function () { setMenu(!menu.classList.contains('is-open')); });
     $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
   }
@@ -145,7 +151,18 @@
     var dotsWrap = $('.cf__dots', root);
     var pos = 0, target = 0, spacing = 200, active = -1, rendered = null;
     var drag = false, moved = false, startX = 0, startPos = 0, lastX = 0, lastT = 0, vx = 0, downItem = null;
-    var hover = false, visible = true;
+    var hover = false, visible = true, paused = false;
+    var status = $('#cfStatus'), playBtn = $('.cf__play', root);
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function setPaused(p) {
+      paused = p;
+      if (playBtn) {
+        playBtn.setAttribute('aria-pressed', p);
+        playBtn.setAttribute('aria-label', p ? 'Reanudar el carrusel' : 'Pausar el carrusel');
+      }
+    }
+    if (reduce.matches) setPaused(true);
+    if (playBtn) playBtn.addEventListener('click', function () { setPaused(!paused); });
 
     function mod(a) { return ((a % n) + n) % n; }
     function wrap(d) { d = mod(d + n / 2) - n / 2; return d; }
@@ -154,7 +171,7 @@
     if (dotsWrap && !dotsWrap.children.length) {
       items.forEach(function (_, i) {
         var b = document.createElement('button');
-        b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', 'Foto ' + (i + 1));
+        b.type = 'button'; b.setAttribute('aria-label', 'Ir a la foto ' + (i + 1) + ' de ' + n);
         b.addEventListener('click', function () { goTo(i); });
         dotsWrap.appendChild(b);
       });
@@ -192,7 +209,14 @@
       if (a !== active) {
         active = a;
         items.forEach(function (el, i) { el.classList.toggle('is-active', i === a); });
-        dots.forEach(function (b, i) { b.classList.toggle('is-active', i === a); b.setAttribute('aria-selected', i === a); });
+        dots.forEach(function (b, i) {
+          b.classList.toggle('is-active', i === a);
+          if (i === a) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+        });
+        if (status) {
+          var cap = items[a].querySelector('figcaption');
+          status.textContent = 'Foto ' + (a + 1) + ' de ' + n + (cap ? ': ' + cap.textContent.replace(/\s+/g, ' ').trim() : '');
+        }
       }
     }
 
@@ -229,7 +253,7 @@
     stage.addEventListener('pointercancel', endDrag);
     stage.addEventListener('lostpointercapture', endDrag);
 
-    $$('.cf__btn', root).forEach(function (b) {
+    $$('.cf__btn[data-dir]', root).forEach(function (b) {
       b.addEventListener('click', function () { step(+b.getAttribute('data-dir')); });
     });
     root.addEventListener('keydown', function (e) {
@@ -243,7 +267,7 @@
 
     if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(root);
     setInterval(function () {
-      if (!hover && !drag && visible && !document.hidden) step(1);
+      if (!paused && !hover && !drag && visible && !document.hidden) step(1);
     }, 3600);
 
     window.addEventListener('resize', measure);
@@ -256,6 +280,34 @@
       if (visible) render();
       requestAnimationFrame(loop);
     })();
+  }
+
+  /* ---------- Active section in nav ---------- */
+  function initActiveNav() {
+    if (!('IntersectionObserver' in window)) return;
+    var links = $$('.nav__links a[href^="#"]');
+    var map = {};
+    links.forEach(function (a) { var t = document.querySelector(a.getAttribute('href')); if (t) map[t.id] = a; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var a = map[en.target.id]; if (!a) return;
+        if (en.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('is-active'); l.removeAttribute('aria-current'); });
+          a.classList.add('is-active'); a.setAttribute('aria-current', 'location');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Object.keys(map).forEach(function (id) { io.observe(document.getElementById(id)); });
+  }
+
+  /* ---------- Reviews seamless loop ---------- */
+  function initReviews() {
+    var track = $('.reviews__track');
+    if (!track || track.dataset.cloned) return;
+    track.dataset.cloned = 1;
+    $$('.review', track).forEach(function (r) {
+      var c = r.cloneNode(true); c.setAttribute('aria-hidden', 'true'); track.appendChild(c);
+    });
   }
 
   /* ---------- GSAP scroll scenes ---------- */
@@ -514,6 +566,8 @@
     safe(initMagnetic, 'magnetic');
     safe(initTilt, 'tilt');
     safe(initCoverflow, 'coverflow');
+    safe(initActiveNav, 'activeNav');
+    safe(initReviews, 'reviews');
     safe(initScroll, 'scroll');
     safe(initNails, 'nails3d');
     safe(initMisc, 'misc');
