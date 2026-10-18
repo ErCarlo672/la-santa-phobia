@@ -360,3 +360,70 @@ main{overflow-x:clip}
   .branch-deco--hero{width:130px;left:-10px}
 }
 @media (prefers-reduced-motion: reduce){.blob{animation:none}}
+
+/* ---------- Hero: Marina en el retablo ---------- */
+.arch--marina img{filter:none;object-position:50% 30%}
+.arch--marina figcaption{position:absolute;left:0;right:0;bottom:0;padding:38px 8px 12px;text-align:center;
+  background:linear-gradient(transparent,rgba(44,7,16,.82));color:var(--paper)}
+.arch--marina figcaption b{display:block;font:700 clamp(17px,1.6vw,22px)/1 var(--f-goth);color:var(--gold-2)}
+.arch--marina figcaption span{display:block;margin-top:5px;font:500 8.5px/1 var(--f-sans);letter-spacing:.26em;text-transform:uppercase}
+.inline-link{color:var(--wine);border-bottom:1px solid var(--gold)}
+.inline-link:hover{color:var(--gold-text)}
+
+/* ---------- La fundadora: capilla + estampita 3D ---------- */
+.founder{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(30px,5vw,80px);align-items:center;padding:clamp(100px,11vw,150px) max(var(--gutter),calc((100vw - 1320px) / 2));
+  margin-top:30px;color:var(--paper);overflow:hidden;overflow:clip;isolation:isolate;
+  background:radial-gradient(60% 70% at 28% 45%,#6a1426 0%,#3a0913 55%,var(--wine-deep) 100%)}
+.founder::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background:radial-gradient(circle at 28% 45%,transparent 0 30%,rgba(0,0,0,.35) 80%)}
+.founder::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-2),transparent);opacity:.6}
+.founder__rays{position:absolute;left:28%;top:46%;width:min(1300px,190vw);aspect-ratio:1;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;opacity:.55;
+  background:repeating-conic-gradient(from 0deg,rgba(226,192,113,.22) 0deg 2.5deg,transparent 2.5deg 12deg);
+  -webkit-mask:radial-gradient(circle,#000 0,transparent 58%);mask:radial-gradient(circle,#000 0,transparent 58%);animation:spin 120s linear infinite}
+.founder__stage{position:relative;width:100%;aspect-ratio:1/1.08;max-height:min(820px,calc(100vh - 110px));cursor:grab;touch-action:pan-y}
+@media (min-width:901px){.founder{align-items:start}.founder__stage{position:sticky;top:max(90px,calc(50vh - 380px))}.founder__text{padding-top:4vh}}
+.founder__stage:active{cursor:grabbing}
+#founder3d{position:absolute;inset:-8% -12%;width:124%;height:116%;opacity:0;transition:opacity 1s var(--ease)}
+.founder__stage.is-3d #founder3d{opacity:1}
+.founder__fallback{position:absolute;left:50%;top:50%;width:min(62%,420px);aspect-ratio:3/4.2;transform:translate(-50%,-50%);
+  box-shadow:0 0 0 2px var(--gold-2),0 0 0 9px var(--wine-deep),0 0 0 10px var(--gold-2),0 50px 90px -30px rgba(0,0,0,.7);transition:opacity .6s}
+.founder__fallback img{object-position:50% 28%}
+.founder__stage.is-3d .founder__fallback{opacity:0;pointer-events:none}
+.founder__hint{position:absolute;left:0;right:0;bottom:2%;margin:0;text-align:center;pointer-events:none;opacity:0;transition:opacity .8s .6s}
+.founder__stage.is-3d .founder__hint{opacity:1}
+.founder__hint span{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid rgba(226,192,113,.45);border-radius:999px;
+  font:500 10.5px/1 var(--f-sans);letter-spacing:.26em;text-transform:uppercase;color:var(--gold-2);background:rgba(44,7,16,.45);backdrop-filter:blur(6px)}
+.founder__hint span::before{content:"";width:14px;height:14px;border:1.5px solid currentColor;border-radius:50%;border-right-color:transparent;animation:spinIcon 2.4s linear infinite}
+@keyframes spinIcon{to{transform:rotate(360deg)}}
+.founder__text{position:relative;max-width:600px}
+.founder__name{margin:0 0 28px;font:900 clamp(78px,10.5vw,168px)/.84 var(--f-goth);letter-spacing:-.01em;
+  background:linear-gradient(100deg,#f7e3a6 0%,var(--gold-2) 30%,#fff3cf 46%,var(--gold) 62%,#f2d48c 100%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:gilt 7s ease-in-out infinite alternate;filter:drop-shadow(0 6px 24px rgba(0,0,0,.35))}
+@keyframes gilt{from{background-position:100% 0}to{background-position:0 0}}
+.founder__name .line{display:block;overflow:hidden;padding:0 .04em .08em}
+.founder__name .line > span{display:inline-block;transform:translateY(112%);transition:transform 1.2s var(--ease)}
+.founder__name .line:nth-child(2) > span{padding-left:.55em;transition-delay:.14s}
+.founder__name.is-in .line > span{transform:none}
+.founder .lead{color:#f0dcdf;max-width:52ch}
+.founder__marks{list-style:none;margin:34px 0 0;padding:0;border-top:1px solid rgba(226,192,113,.4)}
+.founder__marks li{display:flex;gap:20px;align-items:flex-start;padding:18px 0;border-bottom:1px solid rgba(242,234,220,.16)}
+.founder__marks b{min-width:40px;font:900 30px/1 var(--f-goth);color:var(--gold-2)}
+.founder__marks h3{margin:0 0 3px;font:500 17px/1.3 var(--f-sans);color:var(--paper)}
+.founder__marks p{margin:0;font-size:15px;color:#dcc6bd}
+.founder__quote{margin:34px 0 0;padding:4px 0 4px 22px;border-left:2px solid var(--gold-2)}
+.founder__quote p{margin:0;font:500 clamp(24px,2.3vw,32px)/1.2 var(--f-goth);color:var(--paper)}
+.founder__quote cite{display:block;margin-top:10px;font:500 11.5px/1 var(--f-sans);font-style:normal;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2)}
+.founder__ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.btn--ghost-paper{border-color:rgba(242,234,220,.55);color:var(--paper)}
+.btn--ghost-paper:hover{background:var(--paper);color:var(--wine)}
+@media (max-width:900px){
+  .founder{grid-template-columns:1fr;padding-top:90px;padding-bottom:90px}
+  .founder__stage{max-width:520px;margin:0 auto;aspect-ratio:1/1.12}
+  .founder__rays{left:50%;top:22%}
+}
+@media (max-width:560px){
+  .founder__name{font-size:clamp(70px,22vw,100px)}
+  .founder__ctas .btn{flex:1 1 100%}
+}
+@media (prefers-reduced-motion: reduce){.founder__rays,.founder__name{animation:none}}
+@media (max-width:900px){.arch--marina figcaption{padding:18px 4px 7px}.arch--marina figcaption b{font-size:13px}.arch--marina figcaption span{display:none}.arch--marina img{object-position:50% 40%}}
